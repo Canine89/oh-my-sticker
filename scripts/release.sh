@@ -34,6 +34,7 @@ APP_NAME="oh-my-sticker.app"
 VOL_NAME="oh-my-sticker"
 ASSET_BASE="oh-my-sticker"
 REPO="Canine89/oh-my-sticker"
+TAP_REPO="Canine89/homebrew-tap"     # brew install --cask canine89/tap/oh-my-sticker
 DD="$ROOT/build/dd"
 DIST="$ROOT/dist"
 UPDATES="$ROOT/updates"
@@ -229,6 +230,24 @@ if [ "$PUBLISH" = "1" ]; then
 ---
 설치: [INSTALL.md](https://github.com/$REPO/blob/main/INSTALL.md) 참고. 이미 설치한 사용자는 앱이 자동으로 업데이트합니다."
   fi
+  # Homebrew cask 갱신 — 실패해도 릴리스 자체는 이미 끝났으므로 경고만 남긴다.
+  echo "▸ Homebrew tap cask 갱신 ($TAP_REPO)"
+  TAP_DIR="$(mktemp -d)"
+  if git clone -q "https://github.com/$TAP_REPO.git" "$TAP_DIR" 2>/dev/null \
+     && [ -f "$TAP_DIR/Casks/$ASSET_BASE.rb" ]; then
+    DMG_SHA="$(shasum -a 256 "$DMG" | awk '{print $1}')"
+    sed -i '' "s/version \"[^\"]*\"/version \"$VERSION\"/" "$TAP_DIR/Casks/$ASSET_BASE.rb"
+    sed -i '' "s/sha256 \"[^\"]*\"/sha256 \"$DMG_SHA\"/" "$TAP_DIR/Casks/$ASSET_BASE.rb"
+    if (cd "$TAP_DIR" && git add . && git commit -q -m "$ASSET_BASE $VERSION" && git push -q); then
+      echo "  cask 갱신 ✓ ($DMG_SHA)"
+    else
+      echo "  ⚠︎ cask 푸시 실패 — 수동으로 $TAP_REPO 의 Casks/$ASSET_BASE.rb 를 올려주세요"
+    fi
+  else
+    echo "  ⚠︎ tap 클론 또는 cask 파일을 찾지 못함 — 수동 갱신 필요"
+  fi
+  rm -rf "$TAP_DIR"
+
   echo "✅ 게시 완료: $TAG"
 else
   echo

@@ -44,7 +44,11 @@ macOS Tahoe의 Dock을 닮은 반투명 팔레트가 화면에 떠 있다. 배�
 
 ## 설치
 
-[Releases](https://github.com/Canine89/oh-my-sticker/releases)에서 최신 DMG를 받아 앱을 `Applications`로 끌어다 놓는다. Apple 공증을 받았으므로 Gatekeeper 경고 없이 바로 열린다. 자세한 내용은 [INSTALL.md](INSTALL.md).
+```bash
+brew install --cask canine89/tap/oh-my-sticker
+```
+
+또는 [Releases](https://github.com/Canine89/oh-my-sticker/releases)에서 DMG를 받아 앱을 `Applications`로 끌어다 놓는다. Apple 공증을 받았으므로 Gatekeeper 경고 없이 바로 열린다. 자세한 내용은 [INSTALL.md](INSTALL.md).
 
 앱은 하루 한 번 새 버전을 확인하고, 메뉴에서 **업데이트 확인…** 으로 즉시 확인할 수도 있다.
 
@@ -104,6 +108,8 @@ Sources/
 ./scripts/release.sh 1.0.1              # 버전 올려 DMG+ZIP+appcast 생성 (게시 X)
 ./scripts/release.sh 1.0.1 --publish    # 위 + 커밋/푸시 + GitHub Release 업로드
 ```
+
+`--publish`는 `Canine89/homebrew-tap`의 cask(버전·sha256)까지 갱신해 푸시한다.
 
 릴리스 전에 `CHANGELOG.md`에 `## <새버전>` 섹션을 먼저 추가한다. 그 내용이 Sparkle 업데이트 창과 GitHub 릴리스 노트에 그대로 나간다. 빌드 번호(`CURRENT_PROJECT_VERSION`)는 스크립트가 매번 올린다 — 이게 올라가야 Sparkle이 업데이트를 감지한다.
 

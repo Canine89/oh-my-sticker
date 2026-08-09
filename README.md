@@ -45,7 +45,9 @@ macOS Tahoe의 Dock을 닮은 반투명 팔레트가 화면에 떠 있다. 배�
 ## 설치
 
 ```bash
-brew install --cask canine89/tap/oh-my-sticker
+brew tap canine89/tap
+brew trust canine89/tap
+brew install --cask oh-my-sticker
 ```
 
 또는 [Releases](https://github.com/Canine89/oh-my-sticker/releases)에서 DMG를 받아 앱을 `Applications`로 끌어다 놓는다. Apple 공증을 받았으므로 Gatekeeper 경고 없이 바로 열린다. 자세한 내용은 [INSTALL.md](INSTALL.md).

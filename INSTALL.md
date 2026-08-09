@@ -3,15 +3,12 @@
 ## Homebrew로 설치 (권장)
 
 ```bash
-brew install --cask canine89/tap/oh-my-sticker
-```
-
-탭을 먼저 추가해도 됩니다.
-
-```bash
 brew tap canine89/tap
+brew trust canine89/tap
 brew install --cask oh-my-sticker
 ```
+
+`brew trust`는 Homebrew 6부터 서드파티 탭의 cask를 설치할 때 한 번 필요합니다. 이미 탭을 신뢰하고 있다면 마지막 줄만 실행하면 됩니다.
 
 ## 직접 내려받아 설치
 
